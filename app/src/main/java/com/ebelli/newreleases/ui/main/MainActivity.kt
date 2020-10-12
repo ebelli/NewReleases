@@ -4,20 +4,26 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.lifecycle.Observer
 import com.ebelli.newreleases.R
+import com.ebelli.newreleases.ui.utils.Status
+import com.google.android.material.snackbar.Snackbar
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel : MainViewModel by viewModel()
+    private val viewAdapter = AlbumsAdapter()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupObservers()
         mainViewModel.getAlbums()
 
 //        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
@@ -26,6 +32,36 @@ class MainActivity : AppCompatActivity() {
 //        val request = builder.build()
 //
 //        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
+    }
+
+    private fun setupObservers() {
+        mainViewModel.albums.observe(this, Observer {
+            it?.let { result ->
+                when (result.status) {
+                    Status.LOADING -> {
+                        progressBar.visibility = View.VISIBLE
+                    }
+                    Status.ERROR -> {
+                        progressBar.visibility = View.GONE
+                        it.message?.let { message ->
+                            val snackbar = Snackbar.make(
+                                root,
+                                message, Snackbar.LENGTH_LONG
+                            )
+                            snackbar.show()
+                        }
+                    }
+                    Status.SUCCESS -> {
+                        it.data?.let {repos ->
+                            viewAdapter.setData(repos)
+                            viewAdapter.notifyDataSetChanged()
+                            album_list.visibility = View.VISIBLE
+                        }
+                        progressBar.visibility = View.GONE
+                    }
+                }
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
