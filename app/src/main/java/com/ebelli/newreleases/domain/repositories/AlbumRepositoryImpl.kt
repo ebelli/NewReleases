@@ -1,4 +1,4 @@
-package com.ebelli.newreleases.data.repositories
+package com.ebelli.newreleases.domain.repositories
 
 import com.ebelli.newreleases.data.remote.ApiDataStore
 

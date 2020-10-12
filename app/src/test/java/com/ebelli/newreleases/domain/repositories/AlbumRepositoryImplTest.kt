@@ -1,4 +1,4 @@
-package com.ebelli.newreleases.data.repositories
+package com.ebelli.newreleases.domain.repositories
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ebelli.newreleases.data.remote.ApiDataStore
@@ -19,31 +19,29 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class AlbumRepositoryImplTest {
 
-
-
     @get:Rule
     val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var apiDataStore: ApiDataStore
 
-    private lateinit var reposRepository: AlbumRepository
+    private lateinit var albumRepository: AlbumRepository
 
 
     @Before
     fun setUp() {
-        reposRepository = AlbumRepositoryImpl(apiDataStore)
+        albumRepository = AlbumRepositoryImpl(apiDataStore)
     }
 
 
     @Test
-    fun `get list of repos when calling endpoint`() {
-        val repos = get2Albums()
+    fun `get list of albums when calling endpoint`() {
+        val album = get2Albums()
         runBlockingTest {
             Mockito.`when`(apiDataStore.getAlbums())
-                .thenReturn(repos)
+                .thenReturn(album)
 
-            val result = reposRepository.getAlbums()
+            val result = albumRepository.getAlbums()
             Assert.assertEquals(result.size , 2)
             Assert.assertEquals(result[0].name , "Dire Straits")
             Assert.assertEquals(result[1].name , "Communiqué")

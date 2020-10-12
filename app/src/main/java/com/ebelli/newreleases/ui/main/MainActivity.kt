@@ -1,23 +1,31 @@
-package com.ebelli.newreleases
+package com.ebelli.newreleases.ui.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.ebelli.newreleases.R
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val mainViewModel : MainViewModel by viewModel()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
+        mainViewModel.getAlbums()
 
-        builder.setScopes(arrayOf("streaming"))
-        val request = builder.build()
-
-        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
+//        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
+//
+//        builder.setScopes(arrayOf("streaming"))
+//        val request = builder.build()
+//
+//        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
