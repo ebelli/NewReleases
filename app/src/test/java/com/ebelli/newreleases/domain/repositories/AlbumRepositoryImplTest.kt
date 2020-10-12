@@ -2,6 +2,9 @@ package com.ebelli.newreleases.domain.repositories
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ebelli.newreleases.data.remote.ApiDataStore
+import com.ebelli.newreleases.data.repositories.AlbumRepositoryImpl
+import com.ebelli.newreleases.domain.model.Albums
+import com.ebelli.newreleases.domain.model.Paging
 import com.ebelli.newreleases.utils.get2Albums
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -36,17 +39,17 @@ class AlbumRepositoryImplTest {
 
     @Test
     fun `get list of albums when calling endpoint`() {
-        val album = get2Albums()
+        val albums = get2Albums()
         runBlockingTest {
             Mockito.`when`(apiDataStore.getAlbums())
-                .thenReturn(album)
+                .thenReturn(albums)
 
             val result = albumRepository.getAlbums()
             Assert.assertEquals(result.size , 2)
             Assert.assertEquals(result[0].name , "Dire Straits")
             Assert.assertEquals(result[1].name , "Communiqué")
             Assert.assertEquals(result[1].releaseDate , "1979-06-15")
-            Assert.assertEquals(result[1].artists[0].name , "Dire Straits")
+            Assert.assertEquals(result[1].artist , "Dire Straits")
         }
     }
 }

@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ebelli.newreleases.R
 import com.ebelli.newreleases.ui.utils.Status
 import com.google.android.material.snackbar.Snackbar
@@ -24,8 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupObservers()
+            initRecyclerView()
         mainViewModel.getAlbums()
-
+//
 //        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
 //
 //        builder.setScopes(arrayOf("streaming"))
@@ -34,6 +37,15 @@ class MainActivity : AppCompatActivity() {
 //        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
     }
 
+    private fun initRecyclerView() {
+        val recyclerView = album_list
+        val viewManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+
+        with(recyclerView) {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+    }
     private fun setupObservers() {
         mainViewModel.albums.observe(this, Observer {
             it?.let { result ->
@@ -52,8 +64,8 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     Status.SUCCESS -> {
-                        it.data?.let {repos ->
-                            viewAdapter.setData(repos)
+                        it.data?.let {albums ->
+                            viewAdapter.setData(albums)
                             viewAdapter.notifyDataSetChanged()
                             album_list.visibility = View.VISIBLE
                         }

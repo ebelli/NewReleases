@@ -2,8 +2,6 @@ package com.ebelli.newreleases.domain.model
 
 import com.google.gson.annotations.SerializedName
 
-
-//album name, release date, album image, external_urls, artist, label and track count
 data class Album(
     val name: String,
     @SerializedName("release_date")
