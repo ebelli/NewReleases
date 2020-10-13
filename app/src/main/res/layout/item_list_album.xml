@@ -13,45 +13,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        app:cardBackgroundColor="@android:color/white"
-        android:layout_margin="8dp"
+        app:cardBackgroundColor="@android:color/black"
+        android:layout_margin="4dp"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="4dp">
 
             <ImageView
                 android:id="@+id/album_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                android:id="@+id/album_name"
+                android:id="@+id/detail_album_name"
                 style="@style/AlbumName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/album_image"
-                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Making Movies" />
 
             <TextView
-                android:id="@+id/repo_date"
+                android:id="@+id/album_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/album_name"
+                app:layout_constraintTop_toBottomOf="@+id/detail_album_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/album_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="13/05/1980"
-                style="@style/AlbumDate" />
+                style="@style/AlbumInfo" />
+            <ImageView
+                android:id="@+id/album_share"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

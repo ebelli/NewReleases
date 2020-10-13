@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">New Releases</string>
+    <string name="detail_tracks_number">Total Tracks:</string>
 </resources>

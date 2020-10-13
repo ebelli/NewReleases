@@ -1,14 +1,15 @@
 package com.ebelli.newreleases.data.entities
 
-import com.ebelli.newreleases.domain.model.Image
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-
-//album name, release date, album image, external_url, artist, label and track count
+@Parcelize
 data class AlbumEntity(
     val name: String,
     val releaseDate: String, // format : "YYYY-MM-DD"
-    val images : List<Image>,
+    val thumbnail: String?,
+    val image : String?,
     val externalUrl: String,
     val artist: String, //Simplified version
     val totalTracks: Int
-)
+) : Parcelable

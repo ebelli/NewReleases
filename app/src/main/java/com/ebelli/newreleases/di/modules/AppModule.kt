@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 
 private const val BASE_URL = "https://api.spotify.com/v1/browse/"
-private const val TOKEN = "BQCwj9kM7bVvH5ulGWzXirIBpLlcSiu9IbOvgVN6XwJtUohTT87u6YYtBhUOKdMBRaFnBL9EV6xE3yue_-02yO9uqzK1CUJ9tHNzq8Rb3JEPWsulPY5_d5vXKUpVk3XCkhOceReyNZi0mqIw1E8" //TODO Remove
+private const val TOKEN = "BQD7mKPSuAmXWGA--_LLzyMPV7rwxWf4zQBs3J1SWAA00WACWOb5j9CYpPS_nMECJL4lmXyA2eqI1CQNJgCV1shN_gKtV_Z0ZVXK4KybqMurgTSeozb3hz9ZVerMeGhS6ZNnmdLLo_cO4gKUu2E" //TODO Remove
 
 val appModule = module {
     single { provideOkHttpClient() }

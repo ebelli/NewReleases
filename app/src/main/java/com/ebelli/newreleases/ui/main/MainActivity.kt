@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         setupObservers()
             initRecyclerView()
         mainViewModel.getAlbums()
-//
+
 //        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
 //
 //        builder.setScopes(arrayOf("streaming"))
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
         // Check if result comes from the correct activity
         if (requestCode == REQUEST_CODE) {
-            val response = AuthenticationClient.getResponse(resultCode, intent)
+            val response = AuthenticationClient.getResponse(resultCode, data)
 
             when (response.type) {
                 // Response was successful and contains auth token
