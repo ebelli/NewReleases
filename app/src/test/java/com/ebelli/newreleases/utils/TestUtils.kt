@@ -18,18 +18,18 @@ fun get2Albums() : Albums =
 fun getAlbumEntityList() : List<AlbumEntity> {
     return listOf<AlbumEntity>(
         AlbumEntity(name = "Dire Straits", releaseDate = "1978-10-07", artist = "Dire Straits", totalTracks = 9,
-            images = listOf(), externalUrl = ""),
+            thumbnail = "", image= "", externalUrl = ""),
         AlbumEntity(name = "Communiqué", releaseDate = "1979-06-15", artist = "Dire Straits", totalTracks = 9,
-            images = listOf(), externalUrl = "")
+            thumbnail = "", image= "", externalUrl = "")
     )
 }
 
 private fun getAlbumList() : List<Album> {
     return listOf<Album>(
         Album(name = "Dire Straits", releaseDate = "1978-10-07", artists = getArtists(), totalTracks = 9,
-        images = listOf(), externalUrls = getExternalUrls()),
+        images = listOf(Image(height = 64, width = 64, url = ""), Image(height = 300, width = 300, url = "")), externalUrls = getExternalUrls()),
         Album(name = "Communiqué", releaseDate = "1979-06-15", artists = getArtists(), totalTracks = 9,
-        images = listOf(), externalUrls = getExternalUrls())
+        images = listOf(Image(height = 64, width = 64, url = ""), Image(height = 300, width = 300, url = "")), externalUrls = getExternalUrls())
     )
 }
 

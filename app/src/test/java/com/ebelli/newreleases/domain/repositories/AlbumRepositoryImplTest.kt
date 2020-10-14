@@ -3,8 +3,6 @@ package com.ebelli.newreleases.domain.repositories
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ebelli.newreleases.data.remote.ApiDataStore
 import com.ebelli.newreleases.data.repositories.AlbumRepositoryImpl
-import com.ebelli.newreleases.domain.model.Albums
-import com.ebelli.newreleases.domain.model.Paging
 import com.ebelli.newreleases.utils.get2Albums
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

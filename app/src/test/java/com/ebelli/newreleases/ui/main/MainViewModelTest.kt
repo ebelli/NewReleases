@@ -4,8 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.ebelli.newreleases.data.entities.AlbumEntity
 import com.ebelli.newreleases.domain.repositories.AlbumRepository
-import com.ebelli.newreleases.ui.utils.Result
-import com.ebelli.newreleases.ui.utils.Status
+import com.ebelli.newreleases.ui.utils.Resource
 import com.ebelli.newreleases.utils.getAlbumEntityList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,10 +34,10 @@ class MainViewModelTest {
     private lateinit var albumRepository: AlbumRepository
 
     @Mock
-    private lateinit var albumObserver: Observer<Result<List<AlbumEntity>>>
+    private lateinit var albumObserver: Observer<Resource<List<AlbumEntity>>>
 
     @Captor
-    private lateinit var argumentCaptor: ArgumentCaptor<Result<List<AlbumEntity>>>
+    private lateinit var argumentCaptor: ArgumentCaptor<Resource<List<AlbumEntity>>>
 
     private lateinit var viewModel: MainViewModel
 
@@ -66,9 +65,8 @@ class MainViewModelTest {
         Mockito.verify(albumObserver,Mockito.times(2)).onChanged(argumentCaptor.capture())
 
         val values = argumentCaptor.allValues
-        Assert.assertEquals(Status.LOADING, values[0].status)
-        Assert.assertEquals(Status.ERROR, values[1].status)
-
+        Assert.assertTrue(values[0] is Resource.Loading)
+        Assert.assertTrue(values[1] is Resource.Error)
         viewModel.albums.removeObserver(albumObserver)
     }
 
@@ -84,8 +82,8 @@ class MainViewModelTest {
         Mockito.verify(albumObserver,Mockito.times(2)).onChanged(argumentCaptor.capture())
 
         val values = argumentCaptor.allValues
-        Assert.assertEquals(Status.LOADING, values[0].status)
-        Assert.assertEquals(Status.ERROR, values[1].status)
+        Assert.assertTrue(values[0] is Resource.Loading)
+        Assert.assertTrue(values[1] is Resource.Error)
 
         viewModel.albums.removeObserver(albumObserver)
     }
@@ -103,8 +101,8 @@ class MainViewModelTest {
         Mockito.verify(albumObserver,Mockito.times(2)).onChanged(argumentCaptor.capture())
 
         val values = argumentCaptor.allValues
-        Assert.assertEquals(Status.LOADING, values[0].status)
-        Assert.assertEquals(Status.SUCCESS, values[1].status)
+        Assert.assertTrue(values[0] is Resource.Loading)
+        Assert.assertTrue(values[1] is Resource.Success)
         Assert.assertEquals(getAlbumEntityList()[1].name, values[1].data!![1].name)
 
         viewModel.albums.removeObserver(albumObserver)

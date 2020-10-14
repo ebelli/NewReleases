@@ -1,19 +1,14 @@
 package com.ebelli.newreleases.ui.main
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ebelli.newreleases.R
-import com.ebelli.newreleases.ui.utils.Status
+import com.ebelli.newreleases.ui.utils.Resource
 import com.google.android.material.snackbar.Snackbar
-import com.spotify.sdk.android.authentication.AuthenticationClient
-import com.spotify.sdk.android.authentication.AuthenticationRequest
-import com.spotify.sdk.android.authentication.AuthenticationResponse
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -28,13 +23,6 @@ class MainActivity : AppCompatActivity() {
         setupObservers()
             initRecyclerView()
         mainViewModel.getAlbums()
-
-//        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
-//
-//        builder.setScopes(arrayOf("streaming"))
-//        val request = builder.build()
-//
-//        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
     }
 
     private fun initRecyclerView() {
@@ -49,11 +37,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupObservers() {
         mainViewModel.albums.observe(this, Observer {
             it?.let { result ->
-                when (result.status) {
-                    Status.LOADING -> {
+                when (result) {
+                    is Resource.Loading -> {
                         progressBar.visibility = View.VISIBLE
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         progressBar.visibility = View.GONE
                         it.message?.let { message ->
                             val snackbar = Snackbar.make(
@@ -63,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                             snackbar.show()
                         }
                     }
-                    Status.SUCCESS -> {
+                    is Resource.Success -> {
                         it.data?.let {albums ->
                             viewAdapter.setData(albums)
                             viewAdapter.notifyDataSetChanged()
@@ -74,40 +62,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // Check if result comes from the correct activity
-        if (requestCode == REQUEST_CODE) {
-            val response = AuthenticationClient.getResponse(resultCode, data)
-
-            when (response.type) {
-                // Response was successful and contains auth token
-                AuthenticationResponse.Type.TOKEN -> {
-                    Log.d("Spotify token",response.accessToken)
-                }
-                // Auth flow returned an error
-                AuthenticationResponse.Type.ERROR -> {
-                    Log.d("Spotify",response.error)
-                }
-                AuthenticationResponse.Type.EMPTY -> {
-                    Log.d("Spotify","response Empty")
-                }
-
-            }// Handle error response
-            // Most likely auth flow was cancelled
-            // Handle other cases
-        }
-    }
-
-    companion object {
-
-
-        // Request code will be used to verify if result comes from the login activity. Can be set to any integer.
-        private val REQUEST_CODE = 1337
-        private val REDIRECT_URI = "ebelli://newreleases"
-        private val CLIENT_ID = "472362e69154418aba9037543bad7ff2"
     }
 }
